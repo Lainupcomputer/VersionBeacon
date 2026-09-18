@@ -1,9 +1,9 @@
 import json
 
-from lucs_uvc import (
+from version_beacon import (
     CheckStatus,
     EventName,
-    UVCConfig,
+    VersionBeaconConfig,
     VersionChecker,
     check,
 )
@@ -33,7 +33,7 @@ def fake_urlopen(payload):
 
 
 def make_config():
-    return UVCConfig(
+    return VersionBeaconConfig(
         app_name="MyApp",
         current_version="1.2.3",
         version_url="https://example.test/version.json",
@@ -49,7 +49,7 @@ def test_json_update_is_detected(monkeypatch):
         }
     ).encode()
     monkeypatch.setattr(
-        "lucs_uvc.client.urllib_request.urlopen",
+        "version_beacon.client.urllib_request.urlopen",
         fake_urlopen(payload),
     )
 
@@ -63,7 +63,7 @@ def test_json_update_is_detected(monkeypatch):
 
 def test_legacy_text_response_is_still_readable(monkeypatch):
     monkeypatch.setattr(
-        "lucs_uvc.client.urllib_request.urlopen",
+        "version_beacon.client.urllib_request.urlopen",
         fake_urlopen(b"MyApp_version==1.2.3"),
     )
 
@@ -74,7 +74,7 @@ def test_legacy_text_response_is_still_readable(monkeypatch):
 
 def test_events_are_emitted(monkeypatch):
     monkeypatch.setattr(
-        "lucs_uvc.client.urllib_request.urlopen",
+        "version_beacon.client.urllib_request.urlopen",
         fake_urlopen(b'{"version":"1.2.4"}'),
     )
     events = []
@@ -89,11 +89,11 @@ def test_events_are_emitted(monkeypatch):
 
 
 def test_top_level_wrapper_reads_environment(monkeypatch):
-    monkeypatch.setenv("LUCS_UVC_APP_NAME", "MyApp")
-    monkeypatch.setenv("LUCS_UVC_CURRENT_VERSION", "1.2.3")
-    monkeypatch.setenv("LUCS_UVC_VERSION_URL", "https://example.test/version.json")
+    monkeypatch.setenv("VERSION_BEACON_APP_NAME", "MyApp")
+    monkeypatch.setenv("VERSION_BEACON_CURRENT_VERSION", "1.2.3")
+    monkeypatch.setenv("VERSION_BEACON_VERSION_URL", "https://example.test/version.json")
     monkeypatch.setattr(
-        "lucs_uvc.client.urllib_request.urlopen",
+        "version_beacon.client.urllib_request.urlopen",
         fake_urlopen(b'{"version":"1.2.3"}'),
     )
 

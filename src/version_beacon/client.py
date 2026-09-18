@@ -12,10 +12,10 @@ from typing import Any, Callable, Dict, Mapping, Optional, Union
 from urllib import error as urllib_error
 from urllib import request as urllib_request
 
-from .config import DEFAULT_ENV_PREFIX, UVCConfig
+from .config import DEFAULT_ENV_PREFIX, VersionBeaconConfig
 from .events import EventEmitter, EventKey, EventName
 from .exceptions import (
-    UVCError,
+    VersionBeaconError,
     VersionFetchError,
     VersionResponseError,
 )
@@ -92,7 +92,7 @@ class VersionChecker:
 
     def __init__(
         self,
-        config: Optional[UVCConfig] = None,
+        config: Optional[VersionBeaconConfig] = None,
         *,
         app_name: Optional[str] = None,
         current_version: Optional[str] = None,
@@ -118,7 +118,7 @@ class VersionChecker:
         ):
             raise ValueError("Pass either config or individual configuration values, not both.")
 
-        self.config = config or UVCConfig.from_sources(
+        self.config = config or VersionBeaconConfig.from_sources(
             app_name=app_name,
             current_version=current_version,
             version_url=version_url,
@@ -137,9 +137,9 @@ class VersionChecker:
         *,
         events: Optional[EventEmitter] = None,
     ) -> "VersionChecker":
-        """Create a checker from ``LUCS_UVC_*`` environment variables."""
+        """Create a checker from ``VERSION_BEACON_*`` environment variables."""
 
-        return cls(config=UVCConfig.from_env(prefix), events=events)
+        return cls(config=VersionBeaconConfig.from_env(prefix), events=events)
 
     def on(
         self,
@@ -197,8 +197,8 @@ class VersionChecker:
                 release_notes=metadata.release_notes,
             )
         except Exception as exc:
-            if not isinstance(exc, UVCError):
-                logger.debug("Unexpected LUCS-UVC check error", exc_info=True)
+            if not isinstance(exc, VersionBeaconError):
+                logger.debug("Unexpected VersionBeacon check error", exc_info=True)
             result = CheckResult(
                 app_name=self.config.app_name,
                 current_version=self.config.current_version,

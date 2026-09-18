@@ -1,4 +1,4 @@
-"""Configuration handling for LUCS-UVC."""
+"""Configuration handling for VersionBeacon."""
 
 from __future__ import annotations
 
@@ -10,11 +10,11 @@ from urllib.parse import urlparse
 from .exceptions import ConfigurationError
 
 
-DEFAULT_ENV_PREFIX = "LUCS_UVC_"
+DEFAULT_ENV_PREFIX = "VERSION_BEACON_"
 DEFAULT_TIMEOUT = 5.0
 DEFAULT_RETRIES = 0
 DEFAULT_MAX_RESPONSE_BYTES = 1024 * 1024
-DEFAULT_USER_AGENT = "lucs-uvc/2"
+DEFAULT_USER_AGENT = "version-beacon/2"
 
 
 def _environment_value(
@@ -87,7 +87,7 @@ def _int_value(
 
 
 @dataclass(frozen=True)
-class UVCConfig:
+class VersionBeaconConfig:
     """Validated configuration used by :class:`VersionChecker`."""
 
     app_name: str
@@ -124,7 +124,7 @@ class UVCConfig:
         prefix: str = DEFAULT_ENV_PREFIX,
         *,
         environment: Optional[Mapping[str, str]] = None,
-    ) -> "UVCConfig":
+    ) -> "VersionBeaconConfig":
         """Create configuration from environment variables."""
 
         return cls.from_sources(prefix=prefix, environment=environment)
@@ -142,7 +142,7 @@ class UVCConfig:
         user_agent: Optional[str] = None,
         prefix: str = DEFAULT_ENV_PREFIX,
         environment: Optional[Mapping[str, str]] = None,
-    ) -> "UVCConfig":
+    ) -> "VersionBeaconConfig":
         """Resolve explicit values first, then environment variables."""
 
         env = os.environ if environment is None else environment

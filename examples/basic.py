@@ -1,6 +1,6 @@
-"""Minimal LUCS-UVC example using environment variables."""
+"""Minimal VersionBeacon example using environment variables."""
 
-from lucs_uvc import check
+from version_beacon import check
 
 
 result = check()

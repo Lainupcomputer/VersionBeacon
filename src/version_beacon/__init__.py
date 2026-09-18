@@ -1,16 +1,16 @@
-"""LUCS-UVC: a simple application version checker."""
+"""VersionBeacon: a simple application version checker."""
 
 from __future__ import annotations
 
 from typing import Any, Callable, Mapping, Optional
 
 from .client import VersionChecker
-from .config import UVCConfig
+from .config import VersionBeaconConfig
 from .events import EventEmitter, EventName
 from .exceptions import (
     ConfigurationError,
     InvalidVersionError,
-    UVCError,
+    VersionBeaconError,
     VersionFetchError,
     VersionResponseError,
 )
@@ -19,7 +19,7 @@ from .versions import Version, parse_version
 
 __all__ = [
     "VersionChecker",
-    "UVCConfig",
+    "VersionBeaconConfig",
     "EventEmitter",
     "EventName",
     "CheckResult",
@@ -28,7 +28,7 @@ __all__ = [
     "Version",
     "parse_version",
     "check",
-    "UVCError",
+    "VersionBeaconError",
     "ConfigurationError",
     "InvalidVersionError",
     "VersionFetchError",
@@ -40,7 +40,7 @@ __version__ = "2.0.0"
 
 def check(
     *,
-    config: Optional[UVCConfig] = None,
+    config: Optional[VersionBeaconConfig] = None,
     app_name: Optional[str] = None,
     current_version: Optional[str] = None,
     version_url: Optional[str] = None,
@@ -48,7 +48,7 @@ def check(
     retries: Optional[int] = None,
     max_response_bytes: Optional[int] = None,
     user_agent: Optional[str] = None,
-    env_prefix: str = "LUCS_UVC_",
+    env_prefix: str = "VERSION_BEACON_",
     events: Optional[Mapping[str, Callable[[Any], None]]] = None,
     on_update_available: Optional[Callable[[CheckResult], None]] = None,
     on_up_to_date: Optional[Callable[[CheckResult], None]] = None,
@@ -59,8 +59,8 @@ def check(
     """One-call wrapper around :class:`VersionChecker`.
 
     When configuration arguments are omitted, values are read from
-    ``LUCS_UVC_APP_NAME``, ``LUCS_UVC_CURRENT_VERSION`` and
-    ``LUCS_UVC_VERSION_URL``.
+    ``VERSION_BEACON_APP_NAME``, ``VERSION_BEACON_CURRENT_VERSION`` and
+    ``VERSION_BEACON_VERSION_URL``.
     """
 
     checker = VersionChecker(

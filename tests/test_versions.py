@@ -1,6 +1,6 @@
 import pytest
 
-from lucs_uvc import InvalidVersionError, parse_version
+from version_beacon import InvalidVersionError, parse_version
 
 
 def test_three_and_four_part_versions_compare_correctly():

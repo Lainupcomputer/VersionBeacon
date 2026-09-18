@@ -1,12 +1,12 @@
-# LUCS-UVC
+# VersionBeacon
 
-LUCS-UVC is a small Python library for checking whether an application is
+VersionBeacon is a small Python library for checking whether an application is
 running the latest available version.
 
 The v2 API is designed to be simple for application developers:
 
 ```python
-from lucs_uvc import check
+from version_beacon import check
 
 result = check(
     app_name="MyApp",
@@ -21,7 +21,7 @@ if result.update_available:
 ## Installation
 
 ```bash
-python -m pip install lucs-uvc
+python -m pip install version-beacon
 ```
 
 ## Environment variables
@@ -31,31 +31,31 @@ function arguments always take precedence over environment variables.
 
 | Variable | Required | Default |
 | --- | --- | --- |
-| `LUCS_UVC_APP_NAME` | yes | — |
-| `LUCS_UVC_CURRENT_VERSION` | yes | — |
-| `LUCS_UVC_VERSION_URL` | yes | — |
-| `LUCS_UVC_TIMEOUT` | no | `5` seconds |
-| `LUCS_UVC_RETRIES` | no | `0` |
-| `LUCS_UVC_MAX_RESPONSE_BYTES` | no | `1048576` |
-| `LUCS_UVC_USER_AGENT` | no | `lucs-uvc/2` |
+| `VERSION_BEACON_APP_NAME` | yes | — |
+| `VERSION_BEACON_CURRENT_VERSION` | yes | — |
+| `VERSION_BEACON_VERSION_URL` | yes | — |
+| `VERSION_BEACON_TIMEOUT` | no | `5` seconds |
+| `VERSION_BEACON_RETRIES` | no | `0` |
+| `VERSION_BEACON_MAX_RESPONSE_BYTES` | no | `1048576` |
+| `VERSION_BEACON_USER_AGENT` | no | `version-beacon/2` |
 
 Then a check only needs:
 
 ```python
-from lucs_uvc import check
+from version_beacon import check
 
 result = check()
 ```
 
 The environment prefix can be changed with `env_prefix` or by using
-`UVCConfig.from_env(prefix="MY_APP_UVC_")`.
+`VersionBeaconConfig.from_env(prefix="MY_APP_VERSION_BEACON_")`.
 
 ## Events
 
 For repeated checks, use `VersionChecker` and register callbacks:
 
 ```python
-from lucs_uvc import EventName, VersionChecker
+from version_beacon import EventName, VersionChecker
 
 checker = VersionChecker.from_env()
 

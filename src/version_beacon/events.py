@@ -72,4 +72,4 @@ class EventEmitter:
             try:
                 callback(payload)
             except Exception:
-                logger.exception("LUCS-UVC event handler failed: %s", event_name)
+                logger.exception("VersionBeacon event handler failed: %s", event_name)
